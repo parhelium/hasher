@@ -1,6 +1,6 @@
 node_modules/*
-.idea/**
-components/**
+.idea/*
+components/*
 !components/ractive/release/*
 !components/bootstrap/dist/*
 !components/basket/dist/*
