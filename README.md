@@ -2,7 +2,7 @@ Hasher
 ======
 
 ### Goal:
-use your master password to generate salt-based password for each service (like gmail, github, etc...)
+use your master password to generate service based password  (for services like gmail, github, etc...)
 
 ### Interface:
 
