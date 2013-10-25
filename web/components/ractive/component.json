@@ -1,0 +1,22 @@
+{
+  "name": "ractive",
+  "repo": "Rich-Harris/Ractive",
+  "description": "Next-generation DOM manipulation",
+  "version": "0.3.7",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "build/Ractive.js",
+  "scripts": [
+    "build/Ractive.js"
+  ],
+  "gitHead": "5b3f25f25db47b64ad65ffd85b644f45cb5ed7a5",
+  "readme": "Ractive.js - Next-generation DOM manipulation\n=============================================\n\n*Got questions? Tag Stack Overflow questions with [ractivejs](http://stackoverflow.com/questions/tagged/ractivejs) or contact [@RactiveJS](http://twitter.com/RactiveJS) on Twitter*\n\nWhat is Ractive.js?\n-------------------\n\nIt's a JavaScript library for building reactive user interfaces in a way that doesn't force you into a particular framework's way of thinking. Its features include...\n\n* data-binding, with a beautiful declarative syntax\n* event handling that doesn't make you tear your hair out\n* flexible and performant animations and transitions\n\n...among many others. It takes a radically different approach to DOM manipulation - one that saves both you and the browser unnecessary work.\n\nTo get a feel for how it will make your life as a web developer easier, visit [ractivejs.org](http://ractivejs.org), follow the [interactive tutorials](http://learn.ractivejs.org), or try the [60 second setup](https://github.com/Rich-Harris/Ractive/wiki/60-second-setup).\n\n\nGet help\n--------\n\nIf you don't find what you're looking for in the [docs](https://github.com/rich-harris/Ractive/wiki), ask a question on Stack Overflow with the `ractive` tag, or send a tweet to [@RactiveJS](http://twitter.com/RactiveJS) or [@Rich_Harris](http://twitter.com/Rich_Harris).\n\n\nBuilding\n--------\n\nTo build the project locally, you'll need to have [Grunt](http://gruntjs.com) installed. Clone the repo, navigate to the folder, then do\n\n```shell\n$ npm install\n```\n\nto install all the development dependencies (which aren't included in the repo itself). Then do\n\n```shell\n$ grunt\n```\n\nto build the project from source, lint it, run the tests and minify the library. If all of those steps succeed, files will be created in the `build` folder.\n\nOther grunt commands available:\n\n```shell\n# Watch all source files, and rebuild when they change. This will\n# only concatenate the files (it won't lint/test/minify) to the\n# tmp folder\n$ grunt watch\n\n# Concatenate the files to the tmp folder\n$ grunt concat\n\n# Lint the concatenated code\n$ grunt jshint\n\n# Run tests on the concatenated code\n$ grunt qunit\n\n# Release a new version of the library to the release folder\n# (reads version number from package.json)\n$ grunt release\n```\n\n\nContributing\n------------\n\nIf you have feature suggestions or bug reports, please [raise an issue on GitHub](https://github.com/Rich-Harris/Ractive/issues) after checking it's not a duplicate.\n\nPull requests are always welcome! In lieu of a formal styleguide, please try to follow the existing conventions.\n\n\nBrowser support\n---------------\n\nTested successfully in IE8+ and all modern browsers. If your experience differs please let me know! (For legacy browser support, use the builds with `legacy` in the filename - these include polyfills for `Array.prototype.forEach` and other ES5 features used by Ractive.)\n\n\nLicense\n-------\n\nCopyright (c) 2012-13 Rich Harris. Released under an MIT license.\n",
+  "readmeFilename": "README.md",
+  "_id": "Ractive@0.3.7",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Rich-Harris/Ractive"
+  }
+}

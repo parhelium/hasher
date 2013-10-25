@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="generator"
+          content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="shortcut icon" href="components/bootstrap/assets/ico/favicon.png"> -->
+    <title>
+        10s.pl
+    </title><!-- Bootstrap core CSS -->
+    <link href="components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+
+    <script src="components/bootstrap/assets/js/html5shiv.js"></script>
+    <script src="components/bootstrap/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<div id="app" class="container"></div>
+<!-- /container -->
+
+<script id="header" type="text/ractive">
+<div class="header">        
+        <ul class="nav nav-pills pull-right">
+        </ul>
+        <h3 class="text-muted">password generator</h3>
+        </div>
+
+
+</script>
+<script id="footer" type="text/ractive">
+        <div class="footer">        
+        </div>
+
+
+</script>
+<script id="password" type="text/ractive">
+  <form role="form">
+      <div class="form-group">
+        <label for="masterInput">
+            Master password{{#masterPass.length}} ({{masterPass.length}}){{/masterPass.length}}
+        </label>
+        <input type="password" class="form-control" value="{{masterPass}}">
+      </div>
+      <div class="form-group">
+        <label for="">Salt</label>
+        <select class="form-control" value='{{selectedSalt}}' >
+          {{#salts:i}}
+             <option value='{{value}}'>{{label}}</option>
+          {{/salts}}
+        </select>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label for="">Generated password</label>
+        <div>{{generatePassword(masterPass, selectedSalt)}}</div>
+      </div>
+</form>
+
+
+</script>
+<script src="js/utils.js"></script>
+<script src="components/CryptoJSv3.1.2/rollups/sha3.js"></script>
+<script src="components/ractive/release/0.3.7/Ractive.js"></script>
+<script type="application/javascript">
+    var PasswordGenerator = Ractive.extend({
+        defaultSalts: [
+            {"label": "gmail", "value": "gmail", "test": {"master": "home", "hash": "40092a3306e450d0a98e7e0de484e10d", "outputLength": 128}},
+            {"label": "odesk", "value": "odesk", "test": {"master": "home", "hash": "2973905b69d1809c4350c543df5b5eb3", "outputLength": 128}},
+            {"label": "elance", "value": "elance", "test": {"master": "home", "hash": "7e1620db4c4a38b5857dd5bd2783ed83", "outputLength": 128}},
+            {"label": "github", "value": "github", "test": {"master": "home", "hash": "576e4f497e6e2e66ea2089b6499e3c6b", "outputLength": 128}},
+            {"label": "twitter", "value": "twitter", "test": {"master": "home", "hash": "400a2f9292d0d2b5a93c0e18784084e6", "outputLength": 128}},
+            {"label": "bitbucket", "value": "bitbucket", "test": {"master": "home", "hash": "4d01af241c7008dbb9927ff52206ab17", "outputLength": 128}},
+            {"label": "bankMillenium", "value": "bankmillenium", "test": {"master": "home", "hash": "1e15aba2d3c422d1066213785d416d92", "outputLength": 128}},
+            {"label": "mbank", "value": "mbank", "test": {"master": "home", "hash": "1e48f0e531c0e6b62571238ce74acf4b", "outputLength": 128}},
+            {"label": "stackoverflow", "value": "stackoverflow", "test": {"master": "home", "hash": "40beb07c0feae58bcf9102697c8e892c", "outputLength": 128}},
+            {"label": "bitstamp", "value": "bitstamp", "test": {"master": "home", "hash": "201b52a35fba8241d7f1d348975fa6f8", "outputLength": 128}},
+            {"label": "bitcurex", "value": "bitcurex", "test": {"master": "home", "hash": "5918918cd374c2149ec8506df84a38ec", "outputLength": 128}},
+            {"label": "mt.gox", "value": "mt.gox", "test": {"master": "home", "hash": "f59e82042fec1d3aa1f41ceafc9f2caf", "outputLength": 128}}
+        ],
+        init: function () {
+            var self = this;
+            self.set('generatePassword', self['generatePassword']);
+
+        },
+        generatePassword: function (master, salt, outputLength) {
+            outputLength = outputLength || 128;
+            return CryptoJS.SHA3(master + salt, { outputLength: outputLength});
+        }
+    });
+</script>
+<script type="application/javascript">
+
+    var passwordGeneratorData = {
+    }
+
+    var tmps = [
+        {key: "header", el: "#app", template: '#header', append: true, claz: Ractive},
+        {key: "password", el: "#app", template: '#password', append: true, claz: PasswordGenerator, data: passwordGeneratorData},
+        {key: "footer", el: "#app", template: '#footer', append: true, claz: Ractive},
+    ]
+    var cmps = {};
+    for (var i = 0; i < tmps.length; i++) {
+        var item = tmps[i];
+        cmps[item.key] = new item.claz(item);
+    }
+
+</script>
+</body>
+</html>
