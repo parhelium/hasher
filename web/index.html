@@ -35,35 +35,70 @@
         </div>
 
 
+
 </script>
 <script id="footer" type="text/ractive">
         <div class="footer">        
         </div>
 
 
+
 </script>
 <script id="password" type="text/ractive">
+
+
   <form role="form">
-      <div class="form-group">
-        <label for="masterInput">
-            Master password{{#masterPass.length}} ({{masterPass.length}}){{/masterPass.length}}
-        </label>
-        <input type="password" class="form-control" value="{{masterPass}}">
+    <div class="row">
+      <div class="col-sm-6">
+          <div class="form-group">
+            <label for="masterInput">
+                Master password{{#masterPass.length}} ({{masterPass.length}}){{/masterPass.length}}
+            </label>
+            <input type="password" class="form-control" value="{{masterPass}}">
+          </div>
+          <div class="form-group" style="height:800px;">
+            <label for="">Salt</label>
+            <div>
+                <div class=" col-sm-6">
+                    {{#salts:i}}
+                        {{#if(i < Math.floor(salts.length/2))}}
+                            <label style="width:120px">
+                                <input type='radio' name='{{selectedSalt}}' value='{{value}}'> {{label}}
+                            </label>
+                        {{/if}}
+                    {{/salts}}
+                </div>
+                <div class=" col-sm-6">
+                {{#salts:i}}
+                    {{#if(i >= Math.floor(salts.length/2))}}
+                        <label style="width:120px">
+                            <input type='radio' name='{{selectedSalt}}' value='{{value}}'> {{label}}
+                        </label>
+                    {{/if}}
+                {{/salts}}
+                </div>
+            </div>
+          </div>
       </div>
-      <div class="form-group">
-        <label for="">Salt</label>
-        <select class="form-control" value='{{selectedSalt}}' >
-          {{#salts:i}}
-             <option value='{{value}}'>{{label}}</option>
-          {{/salts}}
-        </select>
+      <div class="col-xs-6 col-sm-4">
+
+          <div class="form-group">
+          <label for="">Tests:</label>
+          <h5><span class="label label-success">Passed {{passedTests.length}}</span>
+  <span class="label label-danger">Failed {{failedTests.length}}</span></h5>
+          </div>
+          <hr>
+          <div class="form-group">
+            <label for="">Generated password</label>
+            <div>{{generatedPasswordMasked(masterPass, selectedSalt)}}</div>
+          </div>
       </div>
-      <hr>
-      <div class="form-group">
-        <label for="">Generated password</label>
-        <div>{{generatePassword(masterPass, selectedSalt)}}</div>
-      </div>
+    </div>
+
+
+
 </form>
+
 
 
 </script>
@@ -88,12 +123,50 @@
         ],
         init: function () {
             var self = this;
-            self.set('generatePassword', self['generatePassword']);
+            self.defaultSalts = self.defaultSalts.sort(
+                    function (a, b) {
+                        var nameA = a.label.toLowerCase(), nameB = b.label.toLowerCase()
+                        if (nameA < nameB) return -1;
+                        if (nameA > nameB) return 1;
+                        return 0;  //no sorting
+                    }
+            )
+            self.set('generatedPasswordMasked', self['generateMaskedPassword']);
+            self.set( 'salts',self.defaultSalts);
 
+
+            self.set('if', function (condition) {
+                return !!condition;
+            });
+
+            var errors = [];
+            var success = [];
+            for (var i = 0; i < self.defaultSalts.length; i++) {
+                var salt = self.defaultSalts[i];
+                console.log(salt.label);
+
+                var expectedHash = salt.test.hash;
+                var generatedHash = self.generatePassword(salt.test.master, salt.value, salt.test.outputLength);
+                var test = expectedHash === generatedHash;
+                if (expectedHash !== generatedHash) {
+                    errors.push({expected: expectedHash, generated: generatedHash, salt: salt});
+                } else {
+                    success.push({expected: expectedHash, generated: generatedHash, salt: salt});
+                }
+            }
+            self.set("failedTests", errors);
+            self.set("passedTests", success);
+
+        },
+        generateMaskedPassword: function (master, salt, outputLength) {
+            var pass = this.generatePassword(master, salt, outputLength);
+            var amt = 3;
+            var restAmt = pass.length - 2 * amt;
+            return pass.substring(0, amt) + Array(restAmt + 1).join(".") + pass.substring(pass.length - amt - 1, pass.length - 1);
         },
         generatePassword: function (master, salt, outputLength) {
             outputLength = outputLength || 128;
-            return CryptoJS.SHA3(master + salt, { outputLength: outputLength});
+            return CryptoJS.SHA3(master + salt, { outputLength: outputLength}).toString();
         }
     });
 </script>
