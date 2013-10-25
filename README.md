@@ -1,15 +1,16 @@
 Hasher
 ======
 
-Goal:
+### Goal:
 use your master password to generate salt-based password for each service (like gmail, github, etc...)
 
-Example:
+### Interface:
+
+![ScreenShot](http://parhelium.pl/shots/20131025.165110.png)
+
+### Example:
 
 master password : **home**
-
-
-generated passwords :
 
 ```json
 {
