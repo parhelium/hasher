@@ -1,7 +1,7 @@
-node_modules/*
+web/node_modules/*
 .idea/*
+web/.idea/*
 node/*
-
 *.exe
 web/components/*
 !web/components/ractive/release/*
