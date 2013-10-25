@@ -8,6 +8,8 @@ node/*
 web/components/*
 !web/components/ractive
 !web/components/bootstrap
+!web/components/basket.js
+!web/components/CryptoJSv3.1.2
 
 web/components/ractive/*
 !web/components/ractive/release/
@@ -15,6 +17,9 @@ web/components/ractive/*
 web/components/bootstrap/*
 !web/components/bootstrap/dist/
 
-!web/components/basket/dist/*
-!web/components/CryptoJSv3.1.2/*
+web/components/basket.js/*
+!web/components/basket.js/dist/
+
+web/components/CryptoJSv3.1.2/*
+!web/components/CryptoJSv3.1.2/rollups
 
