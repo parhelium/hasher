@@ -1,0 +1,10 @@
+node_modules/*
+.idea/*
+node/*
+
+*.exe
+web/components/*
+!web/components/ractive/release/*
+!web/components/bootstrap/dist/*
+!web/components/basket/dist/*
+!web/components/CryptoJSv3.1.2/*

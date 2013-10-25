@@ -1,9 +1,0 @@
-node_modules/*
-.idea/**/*.*
-../.idea/*
-*.exe
-components/*
-!components/ractive/release/*
-!components/bootstrap/dist/*
-!components/basket/dist/*
-!components/CryptoJSv3.1.2/*
