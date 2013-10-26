@@ -4,6 +4,10 @@ Hasher
 ### Goal:
 use your master password to generate service based password  (for services like gmail, github, etc...)
 
+### Demo:
+
+[See demo](http://parhelium.pl/hasher/)
+
 ### Interface:
 
 ![ScreenShot](http://parhelium.pl/shots/20131025.165110.png)
