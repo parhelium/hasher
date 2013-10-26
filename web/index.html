@@ -9,8 +9,9 @@
     <meta name="author" content="">
     <!-- <link rel="shortcut icon" href="components/bootstrap/assets/ico/favicon.png"> -->
     <title>
-        10s.pl
-    </title><!-- Bootstrap core CSS -->
+        Password generator
+    </title>
+    <!-- Bootstrap core CSS -->
     <link href="components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/jumbotron-narrow.css" rel="stylesheet">
@@ -63,7 +64,7 @@
                     {{#salts:i}}
                         {{#if(i < Math.floor(salts.length/2))}}
                             <label style="width:120px">
-                                <input type='radio' name='{{selectedSalt}}' value='{{value}}'> {{label}}
+                                <input type='radio' name='{{selectedSalt}}' value='{{value}}' checked> {{label}}
                             </label>
                         {{/if}}
                     {{/salts}}
@@ -89,10 +90,10 @@
           </div>
           <hr>
           <div class="form-group">
-            <label for="">Generated password</label>
-            <div>{{generatedPasswordMasked(masterPass, selectedSalt)}}</div>
+            <label for="">Generated password({{showPassword(masterPass, selectedSalt).length}})</label>
+            <div>{{showPassword(masterPass, selectedSalt)}}</div>
           </div>
-          <button id="d_clip_button" class="my_clip_button" title="Click me to copy to clipboard." ><b>Copy to clipboard...</b></button>
+          <button on-tap='togglePassword' type="button" class="btn btn-primary"><b>Toggle password</b></button>
       </div>
     </div>
 
@@ -132,10 +133,9 @@
                         return 0;  //no sorting
                     }
             )
-            self.set('generatedPasswordMasked', self['generateMaskedPassword']);
-            self.set( 'salts',self.defaultSalts);
-
-
+            self.set('showPassword', self['showPassword']);
+            self.set('showGeneratedPassword', false);
+            self.set('salts',self.defaultSalts);
             self.set('if', function (condition) {
                 return !!condition;
             });
@@ -157,17 +157,39 @@
             }
             self.set("failedTests", errors);
             self.set("passedTests", success);
+            this.on({
+                togglePassword: function () {
+                    self.toggleGeneratedPassword()
+                }
+            });
+
 
         },
         generateMaskedPassword: function (master, salt, outputLength) {
             var pass = this.generatePassword(master, salt, outputLength);
             var amt = 3;
             var restAmt = pass.length - 2 * amt;
-            return pass.substring(0, amt) + Array(restAmt + 1).join(".") + pass.substring(pass.length - amt - 1, pass.length - 1);
+            return pass.substring(0, amt) + Array(restAmt + 1).join(".") + pass.substring(pass.length - amt , pass.length );
         },
         generatePassword: function (master, salt, outputLength) {
             outputLength = outputLength || 128;
             return CryptoJS.SHA3(master + salt, { outputLength: outputLength}).toString();
+        },
+        showPassword:function(master, salt, outputLength){
+            var self = this;
+            if(self.get('showGeneratedPassword') === true){
+                return self.generatePassword(master, salt, outputLength);
+            }else{
+                return self.generateMaskedPassword(master, salt, outputLength);
+            }
+        },
+        toggleGeneratedPassword:function(){
+            var self = this;
+            if(self.get('showGeneratedPassword') === true){
+                self.set('showGeneratedPassword', false)
+            }else{
+                self.set('showGeneratedPassword', true)
+            }
         }
     });
 </script>
